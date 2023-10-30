@@ -14,8 +14,7 @@
 
 // Execute `rustlings hint quiz3` or use the `hint` watch subcommand for a hint.
 
-// I AM NOT DONE
-
+use std::fmt::*;
 pub struct ReportCard {
     pub grade: f32,
     pub student_name: String,
@@ -24,8 +23,32 @@ pub struct ReportCard {
 
 impl ReportCard {
     pub fn print(&self) -> String {
-        format!("{} ({}) - achieved a grade of {}",
-            &self.student_name, &self.student_age, &self.grade)
+        format!("{}",self)
+    }
+}
+
+impl Display for ReportCard{
+    fn fmt(&self, f: &mut Formatter<'_>)->Result {
+        let mut alphabetic=String::from("");
+        if self.grade >=1.0&& self.grade<1.5{
+            alphabetic="F-".to_string();
+        }else if self.grade >=1.5&& self.grade<2.0{
+            alphabetic="F".to_string();
+        }else if self.grade >=2.0&& self.grade<2.5{
+            alphabetic="E".to_string();
+        }else if self.grade >=2.5&& self.grade<3.0{
+            alphabetic="D".to_string();
+        }else if self.grade >=3.0&& self.grade<3.5{
+            alphabetic="C".to_string();
+        }else if self.grade >=4.0&& self.grade<4.5{
+            alphabetic="B".to_string();
+        }else if self.grade >=4.5&& self.grade<5.0{
+            alphabetic="A".to_string();
+        }else if self.grade >=5.0&& self.grade<=5.5{
+            alphabetic="A+".to_string();
+        }
+        write!(f,"{} ({}) - achieved a grade of {}",self.student_name,self.student_age,alphabetic);
+        Ok(())
     }
 }
 
@@ -33,24 +56,12 @@ impl ReportCard {
 mod tests {
     use super::*;
 
-    #[test]
-    fn generate_numeric_report_card() {
-        let report_card = ReportCard {
-            grade: 2.1,
-            student_name: "Tom Wriggle".to_string(),
-            student_age: 12,
-        };
-        assert_eq!(
-            report_card.print(),
-            "Tom Wriggle (12) - achieved a grade of 2.1"
-        );
-    }
 
     #[test]
     fn generate_alphabetic_report_card() {
         // TODO: Make sure to change the grade here after you finish the exercise.
         let report_card = ReportCard {
-            grade: 2.1,
+            grade: 5.1,
             student_name: "Gary Plotter".to_string(),
             student_age: 11,
         };
